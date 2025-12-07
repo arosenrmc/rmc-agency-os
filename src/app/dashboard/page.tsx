@@ -15,6 +15,10 @@ export default async function DashboardPage() {
     .from("clients")
     .select("*", { count: "exact", head: true });
 
+  const { count: projectCount } = await supabase
+    .from("projects")
+    .select("*", { count: "exact", head: true });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow-sm">
@@ -36,6 +40,12 @@ export default async function DashboardPage() {
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Clients
+                </Link>
+                <Link
+                  href="/projects"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Projects
                 </Link>
               </div>
             </div>
@@ -84,7 +94,10 @@ export default async function DashboardPage() {
             </p>
           </Link>
 
-          <div className="bg-white rounded-lg shadow-md p-6 opacity-60">
+          <Link
+            href="/projects"
+            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                 <svg
@@ -101,11 +114,15 @@ export default async function DashboardPage() {
                   />
                 </svg>
               </div>
-              <span className="text-3xl font-bold text-gray-900">-</span>
+              <span className="text-3xl font-bold text-gray-900">
+                {projectCount || 0}
+              </span>
             </div>
             <h3 className="text-lg font-medium text-gray-900">Projects</h3>
-            <p className="text-gray-600 text-sm mt-1">Coming soon</p>
-          </div>
+            <p className="text-gray-600 text-sm mt-1">
+              Track project progress and tasks
+            </p>
+          </Link>
 
           <div className="bg-white rounded-lg shadow-md p-6 opacity-60">
             <div className="flex items-center justify-between mb-4">
