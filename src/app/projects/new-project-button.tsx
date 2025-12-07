@@ -44,7 +44,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
         return;
       }
 
-      const projectData: any = {
+      const projectData = {
         user_id: user.id,
         name: formData.name,
         description: formData.description || null,
@@ -52,11 +52,8 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
         status: formData.status,
         start_date: formData.start_date || null,
         due_date: formData.due_date || null,
+        budget: formData.budget ? parseFloat(formData.budget) : null,
       };
-
-      if (formData.budget) {
-        projectData.budget = parseFloat(formData.budget);
-      }
 
       const { error: insertError } = await supabase
         .from("projects")
@@ -75,8 +72,8 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
         budget: "",
       });
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create project");
     } finally {
       setLoading(false);
     }

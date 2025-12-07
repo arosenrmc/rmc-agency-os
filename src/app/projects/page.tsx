@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Project, Client } from "@/lib/types/database";
 import ProjectList from "./project-list";
 import NewProjectButton from "./new-project-button";
 

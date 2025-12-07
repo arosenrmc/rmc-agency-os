@@ -73,7 +73,7 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
 
       setTasks(tasks.map(task =>
         task.id === taskId
-          ? { ...task, status: newStatus as any, completed_at: newStatus === "done" ? new Date().toISOString() : null }
+          ? { ...task, status: newStatus as Task["status"], completed_at: newStatus === "done" ? new Date().toISOString() : null }
           : task
       ));
 
