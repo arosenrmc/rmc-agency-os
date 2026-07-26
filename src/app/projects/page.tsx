@@ -61,6 +61,12 @@ export default async function ProjectsPage() {
                 >
                   Projects
                 </Link>
+                <Link
+                  href="/scanner"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Scanner
+                </Link>
               </div>
             </div>
             <div className="flex items-center gap-4">

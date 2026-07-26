@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
-export default function NewClientButton() {
+export default function NewClientButton({ orgId }: { orgId: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +36,7 @@ export default function NewClientButton() {
     const { error } = await supabase.from("clients").insert({
       ...formData,
       user_id: user.id,
+      org_id: orgId,
     });
 
     if (error) {
@@ -61,7 +62,7 @@ export default function NewClientButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2"
+        className="bg-[#EC2024] text-white px-4 py-2 rounded-md hover:bg-[#C21A1D] transition-colors flex items-center gap-2 text-sm font-medium"
       >
         <svg
           className="w-5 h-5"
@@ -122,7 +123,7 @@ export default function NewClientButton() {
                     setFormData({ ...formData, company: e.target.value })
                   }
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
                   placeholder="Acme Inc."
                 />
               </div>
@@ -141,7 +142,7 @@ export default function NewClientButton() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -160,7 +161,7 @@ export default function NewClientButton() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -179,7 +180,7 @@ export default function NewClientButton() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -200,7 +201,7 @@ export default function NewClientButton() {
                       status: e.target.value as "active" | "inactive" | "lead",
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
                 >
                   <option value="lead">Lead</option>
                   <option value="active">Active</option>
@@ -222,7 +223,7 @@ export default function NewClientButton() {
                     setFormData({ ...formData, notes: e.target.value })
                   }
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none resize-none"
                   placeholder="Additional notes about this client..."
                 />
               </div>
@@ -244,7 +245,7 @@ export default function NewClientButton() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-[#EC2024] text-white px-4 py-2 rounded-md hover:bg-[#C21A1D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Creating..." : "Create Client"}
                 </button>

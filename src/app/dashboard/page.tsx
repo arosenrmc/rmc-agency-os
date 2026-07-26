@@ -47,6 +47,12 @@ export default async function DashboardPage() {
                 >
                   Projects
                 </Link>
+                <Link
+                  href="/scanner"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Scanner
+                </Link>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -124,7 +130,10 @@ export default async function DashboardPage() {
             </p>
           </Link>
 
-          <div className="bg-white rounded-lg shadow-md p-6 opacity-60">
+          <Link
+            href="/scanner"
+            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                 <svg
@@ -137,15 +146,19 @@ export default async function DashboardPage() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
                   />
                 </svg>
               </div>
-              <span className="text-3xl font-bold text-gray-900">-</span>
+              <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900">Invoices</h3>
-            <p className="text-gray-600 text-sm mt-1">Coming soon</p>
-          </div>
+            <h3 className="text-lg font-medium text-gray-900">Build Scanner</h3>
+            <p className="text-gray-600 text-sm mt-1">
+              Audit stack, platform support &amp; security
+            </p>
+          </Link>
         </div>
       </main>
     </div>
