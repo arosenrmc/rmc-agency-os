@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SignOutButton from "@/app/dashboard/sign-out-button";
 import type { CurrentOrg } from "@/lib/org";
+import DevFooter from "./dev/dev-footer";
 
 const MODULES = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
@@ -81,8 +82,10 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
       </aside>
 
       <main className="flex-1 min-w-0">
-        <div className="max-w-[1080px] mx-auto px-6 py-6">{children}</div>
+        <div className="max-w-[1080px] mx-auto px-6 py-6 pb-12">{children}</div>
       </main>
+
+      <DevFooter org={org} userEmail={userEmail} />
     </div>
   );
 }
