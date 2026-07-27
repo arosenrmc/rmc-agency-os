@@ -13,7 +13,8 @@ _Last updated: 2026-07-27_
 ---
 
 ## ✅ Live now
-- **Production app:** https://rmc-agency-os.vercel.app — Phase 0 shipped (2026-07-27).
+- **Production app:** **https://os.rmcmktng.com** (custom domain, Let's Encrypt SSL live) — also https://rmc-agency-os.vercel.app. Phase 0 shipped (2026-07-27).
+  - DNS: A record `os` → `76.76.21.21` at Wix (matches existing `luxover`/`triscapesdemo` Vercel subdomains). Domain added to the Vercel `rmc-agency-os` Production project.
   - Org/tenancy model: `organizations`, `memberships`, `profiles` + org-membership RLS (migrations 004–008). Data backfilled into the **RMC Creative** org (Andrew = owner).
   - Branded **Clients** module reading org-scoped data.
   - Self-serve **password reset** (`/forgot-password`, `/reset-password`) — client-side `token_hash` verify (survives M365 Safe Links).
