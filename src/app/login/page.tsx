@@ -34,19 +34,26 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-page px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-2xl font-semibold text-gray-900 text-center mb-8">
-            Sign in to your account
-          </h1>
+        <div className="flex justify-center mb-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/rmc-horizontal-white.png"
+            alt="RMC - Create With Purpose"
+            className="h-9 w-auto"
+          />
+        </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
+        <div className="bg-surface border border-border rounded-2xl p-8">
+          <h1 className="text-[20px] font-semibold text-center">Sign in</h1>
+          <p className="text-center text-[13px] text-muted mt-1 mb-7">
+            RMC Agency OS
+          </p>
+
+          <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="email" className="block text-[13px] font-medium text-muted mb-2">
                 Email address
               </label>
               <input
@@ -55,16 +62,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2.5 bg-tile border border-border rounded-lg text-ink placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="password" className="block text-[13px] font-medium text-muted mb-2">
                 Password
               </label>
               <input
@@ -73,13 +77,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2.5 bg-tile border border-border rounded-lg text-ink placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors"
                 placeholder="••••••••"
               />
               <div className="mt-2 text-right">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-blue-600 hover:text-blue-700"
+                  className="text-[13px] text-muted hover:text-accent-strong transition-colors"
                 >
                   Forgot your password?
                 </Link>
@@ -87,7 +91,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md">
+              <div className="bg-danger-bg text-accent-strong text-[13px] p-3 rounded-lg border border-border">
                 {error}
               </div>
             )}
@@ -95,18 +99,15 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-accent hover:bg-accent-strong text-white py-2.5 px-4 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-[13px] text-muted">
             Don&apos;t have an account?{" "}
-            <Link
-              href="/signup"
-              className="text-blue-600 hover:text-blue-700 font-medium"
-            >
+            <Link href="/signup" className="text-accent-strong hover:underline font-medium">
               Sign up
             </Link>
           </p>

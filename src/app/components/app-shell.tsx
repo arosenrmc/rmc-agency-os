@@ -7,6 +7,7 @@ const MODULES = [
   { id: "loops", label: "Loops", href: "/loops" },
   { id: "clients", label: "Clients", href: "/clients" },
   { id: "projects", label: "Projects", href: "/projects" },
+  { id: "domains", label: "Domains", href: "/domains" },
   { id: "scanner", label: "Scanner", href: "/scanner" },
 ];
 
@@ -23,33 +24,33 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-[#F5F5F6] text-[#141416] flex">
-      <aside className="w-[232px] shrink-0 bg-white border-r border-[#E4E4E6] flex flex-col p-4 sticky top-0 h-screen">
+    <div className="min-h-screen bg-page text-ink flex">
+      <aside className="w-[232px] shrink-0 bg-surface border-r border-border flex flex-col p-4 sticky top-0 h-screen">
         <div className="px-1 pb-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/brand/rmc-horizontal-black.png"
+            src="/brand/rmc-horizontal-white.png"
             alt="RMC - Create With Purpose"
             className="w-full max-w-[186px] h-auto"
           />
-          <div className="text-[10px] tracking-[0.16em] uppercase text-[#9797A0] mt-2 px-1">
+          <div className="text-[10px] tracking-[0.16em] uppercase text-faint mt-2 px-1">
             Agency OS
           </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-[#F0F0F1] border border-[#E4E4E6] rounded-lg px-2.5 py-2 mb-3">
-          <span className="w-[22px] h-[22px] rounded-md bg-[#EC2024] text-white text-[11px] font-medium grid place-items-center">
+        <div className="flex items-center gap-2 bg-tile border border-border rounded-lg px-2.5 py-2 mb-3">
+          <span className="w-[22px] h-[22px] rounded-md bg-accent text-white text-[11px] font-medium grid place-items-center">
             {initials}
           </span>
           <span className="flex-1 min-w-0 leading-tight">
             <span className="block text-[13px] font-medium truncate">{org.name}</span>
-            <span className="block text-[9.5px] uppercase tracking-wide text-[#9797A0]">
+            <span className="block text-[9.5px] uppercase tracking-wide text-faint">
               {org.role}
             </span>
           </span>
         </div>
 
-        <div className="text-[10px] uppercase tracking-wider text-[#9797A0] px-2 pb-1.5">
+        <div className="text-[10px] uppercase tracking-wider text-faint px-2 pb-1.5">
           Modules
         </div>
         <nav className="flex flex-col gap-0.5">
@@ -59,8 +60,8 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
               href={m.href}
               className={`px-2.5 py-2 rounded-lg text-[13.5px] transition-colors ${
                 active === m.id
-                  ? "bg-[#FCE7E7] text-[#C21A1D] font-medium"
-                  : "text-[#5C5C63] hover:bg-[#F0F0F1] hover:text-[#141416]"
+                  ? "bg-accent-bg text-accent-strong font-medium"
+                  : "text-muted hover:bg-tile hover:text-ink"
               }`}
             >
               {m.label}
@@ -68,12 +69,12 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
           ))}
         </nav>
 
-        <div className="mt-auto pt-3 border-t border-[#E4E4E6] flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-[#FCE7E7] text-[#C21A1D] text-[11px] font-medium grid place-items-center shrink-0">
+        <div className="mt-auto pt-3 border-t border-border flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-full bg-accent-bg text-accent-strong text-[11px] font-medium grid place-items-center shrink-0">
             {(userEmail[0] || "?").toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-[12px] truncate">{userEmail}</div>
+            <div className="text-[12px] truncate text-muted">{userEmail}</div>
           </div>
           <SignOutButton />
         </div>

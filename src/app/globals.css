@@ -3,36 +3,52 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* RMC brand — dark theme (black / white / red) */
+  --page: #0B0B0C;
+  --surface: #151517;
+  --surface-2: #1B1B20;
+  --tile: #1E1E23;
+  --border: #2A2A31;
+  --ink: #F1F1F2;
+  --muted: #9A9AA2;
+  --faint: #6A6A72;
+  --accent: #EC2024;
+  --accent-strong: #F5484C;
+  --accent-bg: #2A1416;
+  --good: #4FB477;
+  --good-bg: #14261C;
+  --danger: #EC2024;
+  --danger-bg: #2A1416;
+  --warn: #D9A441;
+  --warn-bg: #2A2213;
+  --background: var(--page);
+  --foreground: var(--ink);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--page);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 input,
 textarea,
 select {
-  color: #000000;
+  color: var(--ink);
+  background-color: var(--tile);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }

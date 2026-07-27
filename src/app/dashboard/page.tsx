@@ -1,15 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import SignOutButton from "./sign-out-button";
+import { getCurrentOrg } from "@/lib/org";
+import AppShell from "@/app/components/app-shell";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
-  if (!user) {
-    redirect("/login");
-  }
+  const org = await getCurrentOrg();
+  if (!org) redirect("/login");
 
   const { count: clientCount } = await supabase
     .from("clients")
@@ -19,148 +22,46 @@ export default async function DashboardPage() {
     .from("projects")
     .select("*", { count: "exact", head: true });
 
+  const tiles: {
+    label: string;
+    value: number | null;
+    href: string;
+    hint: string;
+  }[] = [
+    { label: "Clients", value: clientCount ?? 0, href: "/clients", hint: "Client relationships" },
+    { label: "Active projects", value: projectCount ?? 0, href: "/projects", hint: "Project delivery" },
+    { label: "Build Scanner", value: null, href: "/scanner", hint: "Stack & security audit" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-8">
-              <Link href="/dashboard" className="text-xl font-semibold text-gray-900">
-                RMC Agency OS
-              </Link>
-              <div className="hidden sm:flex gap-6">
-                <Link
-                  href="/dashboard"
-                  className="text-gray-900 font-medium"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/clients"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Clients
-                </Link>
-                <Link
-                  href="/projects"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Projects
-                </Link>
-                <Link
-                  href="/scanner"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Scanner
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">{user.email}</span>
-              <SignOutButton />
-            </div>
-          </div>
-        </div>
-      </nav>
+    <AppShell org={org} userEmail={user.email ?? ""} active="dashboard">
+      <div className="mb-6">
+        <h1 className="text-[21px] font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-muted text-[13.5px] mt-0.5">Welcome back to {org.name}.</p>
+      </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-1">Welcome back, {user.email}</p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        {tiles.map((t) => (
           <Link
-            href="/clients"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            key={t.label}
+            href={t.href}
+            className="group bg-surface border border-border rounded-xl p-5 transition-colors hover:border-faint"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <span className="text-3xl font-bold text-gray-900">
-                {clientCount || 0}
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[12px] text-muted">{t.label}</span>
+              <span className="text-accent-strong text-[13px] opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0">
+                &rarr;
               </span>
             </div>
-            <h3 className="text-lg font-medium text-gray-900">Clients</h3>
-            <p className="text-gray-600 text-sm mt-1">
-              Manage your client relationships
-            </p>
+            {t.value !== null ? (
+              <div className="text-[30px] font-medium tabular-nums leading-none">{t.value}</div>
+            ) : (
+              <div className="text-[17px] font-medium leading-none py-1.5">Run a scan</div>
+            )}
+            <div className="text-[12px] text-faint mt-2.5">{t.hint}</div>
           </Link>
-
-          <Link
-            href="/projects"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                  />
-                </svg>
-              </div>
-              <span className="text-3xl font-bold text-gray-900">
-                {projectCount || 0}
-              </span>
-            </div>
-            <h3 className="text-lg font-medium text-gray-900">Projects</h3>
-            <p className="text-gray-600 text-sm mt-1">
-              Track project progress and tasks
-            </p>
-          </Link>
-
-          <Link
-            href="/scanner"
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-purple-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                  />
-                </svg>
-              </div>
-              <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-gray-900">Build Scanner</h3>
-            <p className="text-gray-600 text-sm mt-1">
-              Audit stack, platform support &amp; security
-            </p>
-          </Link>
-        </div>
-      </main>
-    </div>
+        ))}
+      </div>
+    </AppShell>
   );
 }
