@@ -4,6 +4,7 @@ import type { CurrentOrg } from "@/lib/org";
 
 const MODULES = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
+  { id: "loops", label: "Loops", href: "/loops" },
   { id: "clients", label: "Clients", href: "/clients" },
   { id: "projects", label: "Projects", href: "/projects" },
   { id: "scanner", label: "Scanner", href: "/scanner" },

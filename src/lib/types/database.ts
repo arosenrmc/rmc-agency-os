@@ -58,6 +58,24 @@ export type Task = {
   updated_at: string;
 };
 
+export type Loop = {
+  id: string;
+  org_id: string;
+  user_id: string;
+  client_id: string | null;
+  project_id: string | null;
+  title: string;
+  note: string | null;
+  source: "brain" | "email" | "asana" | "ai-chat" | "client" | "other";
+  source_link: string | null;
+  waiting_on: "me" | "them";
+  status: "captured" | "active" | "done" | "dropped";
+  due_date: string | null;
+  last_touched: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type OrgRole = "owner" | "admin" | "member" | "client";
 
 export type Organization = {
