@@ -105,14 +105,14 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
   const doneTasks = tasks.filter(t => t.status === "done");
 
   return (
-    <div className="bg-white rounded-lg shadow-md">
-      <div className="p-6 border-b">
+    <div className="bg-surface border border-border rounded-xl">
+      <div className="p-6 border-b border-border">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Tasks</h2>
+          <h2 className="text-[15px] font-semibold text-ink">Tasks</h2>
           {!isAdding && (
             <button
               onClick={() => setIsAdding(true)}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+              className="text-accent-strong hover:text-accent text-[13px] font-medium transition-colors"
             >
               + Add Task
             </button>
@@ -127,13 +127,13 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
                 value={newTaskTitle}
                 onChange={(e) => setNewTaskTitle(e.target.value)}
                 placeholder="Task title..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="flex-1 px-4 py-2.5 bg-tile border border-border rounded-lg text-ink placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors"
                 autoFocus
               />
               <button
                 type="submit"
                 disabled={loading || !newTaskTitle.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-accent hover:bg-accent-strong text-white rounded-lg font-medium px-4 py-2.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Add
               </button>
@@ -143,7 +143,7 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
                   setIsAdding(false);
                   setNewTaskTitle("");
                 }}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                className="bg-tile border border-border text-ink hover:border-faint rounded-lg px-4 py-2.5 transition-colors"
               >
                 Cancel
               </button>
@@ -156,7 +156,7 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
         {tasks.length === 0 ? (
           <div className="text-center py-12">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-faint"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -168,8 +168,8 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No tasks</h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <h3 className="mt-2 text-[13.5px] font-medium text-ink">No tasks</h3>
+            <p className="mt-1 text-[13px] text-faint">
               Get started by creating your first task.
             </p>
           </div>
@@ -177,28 +177,28 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
           <div className="space-y-6">
             {todoTasks.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-3">
+                <h3 className="text-faint text-[10px] uppercase tracking-wide font-normal mb-3">
                   To Do ({todoTasks.length})
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {todoTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-50 group"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-tile group transition-colors"
                     >
                       <button
                         onClick={() => handleToggleTask(task.id, task.status)}
-                        className="flex-shrink-0 w-5 h-5 border-2 border-gray-300 rounded hover:border-blue-500 transition-colors"
+                        className="flex-shrink-0 w-5 h-5 border-2 border-border rounded hover:border-accent transition-colors"
                       />
-                      <span className="flex-1 text-gray-900">{task.title}</span>
+                      <span className="flex-1 text-ink text-[13.5px]">{task.title}</span>
                       {task.due_date && (
-                        <span className="text-sm text-gray-500">
+                        <span className="text-[12px] text-faint tabular-nums">
                           {new Date(task.due_date).toLocaleDateString()}
                         </span>
                       )}
                       <button
                         onClick={() => handleDeleteTask(task.id)}
-                        className="opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-800 transition-opacity"
+                        className="opacity-0 group-hover:opacity-100 text-faint hover:text-accent-strong transition-all"
                       >
                         <svg
                           className="w-5 h-5"
@@ -222,18 +222,18 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
 
             {doneTasks.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-3">
+                <h3 className="text-faint text-[10px] uppercase tracking-wide font-normal mb-3">
                   Completed ({doneTasks.length})
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {doneTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-50 group opacity-60"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-tile group opacity-60 transition-colors"
                     >
                       <button
                         onClick={() => handleToggleTask(task.id, task.status)}
-                        className="flex-shrink-0 w-5 h-5 bg-green-500 border-2 border-green-500 rounded flex items-center justify-center hover:bg-green-600 transition-colors"
+                        className="flex-shrink-0 w-5 h-5 bg-good border-2 border-good rounded flex items-center justify-center hover:opacity-80 transition-opacity"
                       >
                         <svg
                           className="w-3 h-3 text-white"
@@ -249,12 +249,12 @@ export default function TaskList({ projectId, tasks: initialTasks }: TaskListPro
                           />
                         </svg>
                       </button>
-                      <span className="flex-1 text-gray-600 line-through">
+                      <span className="flex-1 text-muted text-[13.5px] line-through">
                         {task.title}
                       </span>
                       <button
                         onClick={() => handleDeleteTask(task.id)}
-                        className="opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-800 transition-opacity"
+                        className="opacity-0 group-hover:opacity-100 text-faint hover:text-accent-strong transition-all"
                       >
                         <svg
                           className="w-5 h-5"

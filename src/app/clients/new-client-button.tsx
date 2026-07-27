@@ -58,11 +58,15 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
     router.refresh();
   };
 
+  const inputClasses =
+    "w-full px-4 py-2.5 bg-tile border border-border rounded-lg text-ink placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors";
+  const labelClasses = "block text-[13px] font-medium text-muted mb-1.5";
+
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-[#EC2024] text-white px-4 py-2 rounded-md hover:bg-[#C21A1D] transition-colors flex items-center gap-2 text-sm font-medium"
+        className="bg-accent hover:bg-accent-strong text-white rounded-lg font-medium px-4 py-2.5 transition-colors flex items-center gap-2 text-sm"
       >
         <svg
           className="w-5 h-5"
@@ -81,15 +85,15 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-xl font-semibold text-gray-900">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-surface border border-border rounded-xl w-full max-w-md">
+            <div className="flex justify-between items-center p-6 border-b border-border">
+              <h2 className="text-[21px] font-semibold tracking-tight text-ink">
                 Add New Client
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-faint hover:text-ink transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -109,10 +113,7 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="company" className={labelClasses}>
                   Company Name *
                 </label>
                 <input
@@ -123,16 +124,13 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                     setFormData({ ...formData, company: e.target.value })
                   }
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
+                  className={inputClasses}
                   placeholder="Acme Inc."
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="name" className={labelClasses}>
                   Contact Name
                 </label>
                 <input
@@ -142,16 +140,13 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
+                  className={inputClasses}
                   placeholder="John Doe"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="email" className={labelClasses}>
                   Email
                 </label>
                 <input
@@ -161,16 +156,13 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
+                  className={inputClasses}
                   placeholder="john@example.com"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="phone" className={labelClasses}>
                   Phone
                 </label>
                 <input
@@ -180,16 +172,13 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
+                  className={inputClasses}
                   placeholder="(555) 123-4567"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="status"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="status" className={labelClasses}>
                   Status
                 </label>
                 <select
@@ -201,7 +190,7 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                       status: e.target.value as "active" | "inactive" | "lead",
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none"
+                  className={inputClasses}
                 >
                   <option value="lead">Lead</option>
                   <option value="active">Active</option>
@@ -210,10 +199,7 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
               </div>
 
               <div>
-                <label
-                  htmlFor="notes"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="notes" className={labelClasses}>
                   Notes
                 </label>
                 <textarea
@@ -223,13 +209,13 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                     setFormData({ ...formData, notes: e.target.value })
                   }
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#EC2024] focus:border-[#EC2024] outline-none resize-none"
+                  className={`${inputClasses} resize-none`}
                   placeholder="Additional notes about this client..."
                 />
               </div>
 
               {error && (
-                <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md">
+                <div className="bg-danger-bg text-accent-strong text-sm p-3 rounded-lg">
                   {error}
                 </div>
               )}
@@ -238,14 +224,14 @@ export default function NewClientButton({ orgId }: { orgId: string }) {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                  className="flex-1 bg-tile border border-border text-ink hover:border-faint rounded-lg px-4 py-2.5 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-[#EC2024] text-white px-4 py-2 rounded-md hover:bg-[#C21A1D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-accent hover:bg-accent-strong text-white rounded-lg font-medium px-4 py-2.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Creating..." : "Create Client"}
                 </button>

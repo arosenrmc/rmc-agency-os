@@ -38,7 +38,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         setError("You must be logged in");
         return;
@@ -79,25 +79,29 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
     }
   };
 
+  const inputClasses =
+    "w-full px-4 py-2.5 bg-tile border border-border rounded-lg text-ink placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors";
+  const labelClasses = "block text-[13px] font-medium text-muted mb-1.5";
+
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
+        className="bg-accent hover:bg-accent-strong text-white rounded-lg font-medium px-4 py-2.5 transition-colors"
       >
         + New Project
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-xl font-semibold text-gray-900">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-surface border border-border rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b border-border">
+              <h2 className="text-[21px] font-semibold tracking-tight text-ink">
                 Create New Project
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-faint hover:text-ink transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -116,17 +120,14 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
             </div>
 
             {error && (
-              <div className="mx-6 mt-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              <div className="mx-6 mt-6 bg-danger-bg text-accent-strong px-4 py-3 rounded-lg">
                 {error}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label
-                  htmlFor="client_id"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="client_id" className={labelClasses}>
                   Client *
                 </label>
                 <select
@@ -136,7 +137,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     setFormData({ ...formData, client_id: e.target.value })
                   }
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className={inputClasses}
                 >
                   <option value="">Select a client</option>
                   {clients.map((client) => (
@@ -148,10 +149,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
               </div>
 
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="name" className={labelClasses}>
                   Project Name *
                 </label>
                 <input
@@ -162,16 +160,13 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className={inputClasses}
                   placeholder="Website Redesign"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="description" className={labelClasses}>
                   Description
                 </label>
                 <textarea
@@ -181,17 +176,14 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className={`${inputClasses} resize-none`}
                   placeholder="Project details and scope..."
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label
-                    htmlFor="status"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="status" className={labelClasses}>
                     Status
                   </label>
                   <select
@@ -200,7 +192,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, status: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className={inputClasses}
                   >
                     <option value="planning">Planning</option>
                     <option value="active">Active</option>
@@ -211,10 +203,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="budget"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="budget" className={labelClasses}>
                     Budget ($)
                   </label>
                   <input
@@ -225,7 +214,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, budget: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className={inputClasses}
                     placeholder="10000.00"
                   />
                 </div>
@@ -233,10 +222,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label
-                    htmlFor="start_date"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="start_date" className={labelClasses}>
                     Start Date
                   </label>
                   <input
@@ -246,15 +232,12 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, start_date: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className={inputClasses}
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="due_date"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="due_date" className={labelClasses}>
                     Due Date
                   </label>
                   <input
@@ -264,7 +247,7 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, due_date: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className={inputClasses}
                   />
                 </div>
               </div>
@@ -273,14 +256,14 @@ export default function NewProjectButton({ clients }: NewProjectButtonProps) {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                  className="bg-tile border border-border text-ink hover:border-faint rounded-lg px-4 py-2.5 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-accent hover:bg-accent-strong text-white rounded-lg font-medium px-4 py-2.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Creating..." : "Create Project"}
                 </button>

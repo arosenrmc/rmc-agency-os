@@ -20,17 +20,17 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "planning":
-        return "bg-gray-100 text-gray-800";
+        return "bg-tile text-muted";
       case "active":
-        return "bg-green-100 text-green-800";
+        return "bg-good-bg text-good";
       case "on-hold":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-warn-bg text-warn";
       case "completed":
-        return "bg-blue-100 text-blue-800";
+        return "bg-accent-bg text-accent-strong";
       case "archived":
-        return "bg-gray-100 text-gray-500";
+        return "bg-tile text-faint";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-tile text-muted";
     }
   };
 
@@ -41,13 +41,13 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-surface border border-border rounded-xl p-6">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-[21px] font-semibold tracking-tight text-ink mb-2">
             {project.name}
           </h1>
-          <div className="flex items-center gap-4 text-sm text-gray-600">
+          <div className="flex items-center gap-4 text-[13.5px] text-muted">
             <div className="flex items-center gap-1">
               <svg
                 className="w-4 h-4"
@@ -67,7 +67,7 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
           </div>
         </div>
         <span
-          className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${getStatusColor(
+          className={`inline-flex rounded-full text-[11px] font-medium px-2.5 py-1 ${getStatusColor(
             project.status
           )}`}
         >
@@ -76,16 +76,16 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
       </div>
 
       {project.description && (
-        <p className="text-gray-700 mb-6">{project.description}</p>
+        <p className="text-muted text-[13.5px] mb-6">{project.description}</p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t pt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-border pt-6">
         {project.start_date && (
           <div>
-            <div className="text-sm font-medium text-gray-500 mb-1">
+            <div className="text-[10px] uppercase tracking-wide text-faint mb-1">
               Start Date
             </div>
-            <div className="text-base text-gray-900">
+            <div className="text-[14px] text-ink tabular-nums">
               {new Date(project.start_date).toLocaleDateString()}
             </div>
           </div>
@@ -93,10 +93,10 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
 
         {project.due_date && (
           <div>
-            <div className="text-sm font-medium text-gray-500 mb-1">
+            <div className="text-[10px] uppercase tracking-wide text-faint mb-1">
               Due Date
             </div>
-            <div className="text-base text-gray-900">
+            <div className="text-[14px] text-ink tabular-nums">
               {new Date(project.due_date).toLocaleDateString()}
             </div>
           </div>
@@ -104,8 +104,8 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
 
         {project.budget && (
           <div>
-            <div className="text-sm font-medium text-gray-500 mb-1">Budget</div>
-            <div className="text-base text-gray-900">
+            <div className="text-[10px] uppercase tracking-wide text-faint mb-1">Budget</div>
+            <div className="text-[14px] text-ink tabular-nums">
               ${project.budget.toLocaleString()}
             </div>
           </div>
@@ -113,15 +113,15 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
       </div>
 
       {project.clients && (
-        <div className="mt-6 pt-6 border-t">
-          <div className="text-sm font-medium text-gray-500 mb-2">
+        <div className="mt-6 pt-6 border-t border-border">
+          <div className="text-[10px] uppercase tracking-wide text-faint mb-2">
             Client Contact
           </div>
           <div className="flex flex-col gap-1">
             {project.clients.email && (
               <a
                 href={`mailto:${project.clients.email}`}
-                className="text-blue-600 hover:text-blue-800 text-sm"
+                className="text-accent-strong hover:text-accent text-[13px] transition-colors"
               >
                 {project.clients.email}
               </a>
@@ -129,7 +129,7 @@ export default function ProjectHeader({ project }: ProjectHeaderProps) {
             {project.clients.phone && (
               <a
                 href={`tel:${project.clients.phone}`}
-                className="text-blue-600 hover:text-blue-800 text-sm"
+                className="text-accent-strong hover:text-accent text-[13px] transition-colors"
               >
                 {project.clients.phone}
               </a>
