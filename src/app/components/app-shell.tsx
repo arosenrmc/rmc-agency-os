@@ -25,8 +25,9 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-page text-ink flex">
-      <aside className="w-[232px] shrink-0 bg-surface border-r border-border flex flex-col p-4 sticky top-0 h-screen">
+    <div className="h-screen bg-page text-ink flex flex-col overflow-hidden">
+      <div className="flex flex-1 min-h-0">
+      <aside className="w-[232px] shrink-0 bg-surface border-r border-border flex flex-col p-4 overflow-y-auto">
         <div className="px-1 pb-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -81,9 +82,10 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0">
-        <div className="max-w-[1080px] mx-auto px-6 py-6 pb-12">{children}</div>
+      <main className="flex-1 min-w-0 overflow-y-auto">
+        <div className="max-w-[1080px] mx-auto px-6 py-6">{children}</div>
       </main>
+      </div>
 
       <DevFooter org={org} userEmail={userEmail} />
     </div>
