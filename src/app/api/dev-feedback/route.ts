@@ -89,3 +89,57 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ ok: true, id: row.id });
 }
+
+export async function GET() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await isDeveloper()))
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+
+  const { data, error } = await supabase
+    .from("dev_feedback")
+    .select("id, comment, route, page_url, screenshot_path, status, created_at")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  const items = await Promise.all(
+    (data ?? []).map(async (r) => {
+      let screenshotUrl: string | null = null;
+      if (r.screenshot_path) {
+        const { data: signed } = await supabase.storage
+          .from("dev-feedback")
+          .createSignedUrl(r.screenshot_path, 3600);
+        screenshotUrl = signed?.signedUrl ?? null;
+      }
+      return { ...r, screenshotUrl };
+    })
+  );
+
+  return NextResponse.json({ items });
+}
+
+export async function PATCH(req: Request) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await isDeveloper()))
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+
+  const body = await req.json().catch(() => null);
+  const id: unknown = body?.id;
+  const status: unknown = body?.status;
+  const allowed = ["open", "building", "done", "dismissed"];
+  if (typeof id !== "string" || typeof status !== "string" || !allowed.includes(status)) {
+    return NextResponse.json({ error: "invalid" }, { status: 400 });
+  }
+
+  const { error } = await supabase.from("dev_feedback").update({ status }).eq("id", id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true });
+}

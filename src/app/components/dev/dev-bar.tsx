@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import FeedbackTool from "./feedback-tool";
+import DevInbox from "./dev-inbox";
 
 export default function DevBar({
   version,
@@ -19,6 +20,7 @@ export default function DevBar({
 }) {
   const pathname = usePathname();
   const [annotating, setAnnotating] = useState(false);
+  const [inbox, setInbox] = useState(false);
 
   const envColor =
     env === "production"
@@ -44,6 +46,12 @@ export default function DevBar({
         <div className="ml-auto flex items-center gap-3">
           <span className="hidden sm:inline text-faint">{userEmail}</span>
           <button
+            onClick={() => setInbox(true)}
+            className="text-muted hover:text-ink transition-colors"
+          >
+            DEV Inbox
+          </button>
+          <button
             onClick={() => setAnnotating(true)}
             className="text-accent-strong hover:text-accent transition-colors"
           >
@@ -51,9 +59,11 @@ export default function DevBar({
           </button>
         </div>
       </div>
+
       {annotating && (
         <FeedbackTool route={pathname} onClose={() => setAnnotating(false)} />
       )}
+      {inbox && <DevInbox onClose={() => setInbox(false)} />}
     </>
   );
 }
