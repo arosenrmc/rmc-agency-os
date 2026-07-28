@@ -22,9 +22,11 @@ _Last updated: 2026-07-27_
   - Self-serve **password reset** (`/forgot-password`, `/reset-password`) — client-side `token_hash` verify (survives M365 Safe Links).
   - Supabase project: `stvdxcpexmqckomxljix` (agency-os). Vercel: `rmc-agency-os`.
 - **Neptune** (shared knowledge base): live but **not yet connected**. Supabase `neptune` + MCP edge function. See memory `neptune-knowledge-base`.
+- **Dev tools** (developer-only, gated by `profiles.is_developer` — you = true): footer bar (version/env/org·role/route) + screenshot-annotation tool (html2canvas → `dev_feedback` table + private Storage) + **DEV Inbox** drawer (view/triage, flip status). I read `dev_feedback` directly via Supabase = the shared loop. Migrations 011–012.
 
 ## 🅿️ Parked (deliberately not being worked on right now)
 - Neptune connectors (add to Claude + ChatGPT) + account-level standing instructions + Claude Code auto-write hook.
+- Dev-tools fast-follows: (a) **Neptune mirror** for annotations — set `NEPTUNE_ENDPOINT` server env var so each feedback also writes to Neptune; (b) **demo-vs-real inspector** — `is_demo` columns exist; wire the "select element → demo/real" readout in the footer.
 - Reset-email polish: Supabase Auth Site URL / Redirect URLs + Reset-Password email template.
 - Rebrand login/auth to RMC red; port Dashboard/Projects/Scanner into the branded shell.
 - Client drill-in (client detail view).
