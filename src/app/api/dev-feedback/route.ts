@@ -55,11 +55,17 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   const { error } = await requireDev();
   if (error) return error;
 
+  const id = new URL(req.url).searchParams.get("id");
+
   try {
+    if (id) {
+      const detail = await forge("get", { id });
+      return NextResponse.json(detail); // { ticket, events }
+    }
     const out = await forge("list", { source_app: "agency-os" });
     const items = (out.items ?? []).map((t: Record<string, unknown>) => ({
       id: t.id,
