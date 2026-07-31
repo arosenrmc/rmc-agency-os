@@ -10,16 +10,19 @@ const MODULES = [
   { id: "projects", label: "Projects", href: "/projects" },
   { id: "domains", label: "Domains", href: "/domains" },
   { id: "scanner", label: "Scanner", href: "/scanner" },
+  { id: "photo-cull", label: "Photo Cull", href: "/tools/photo-cull" },
 ];
 
 type AppShellProps = {
   org: CurrentOrg;
   userEmail: string;
   active: string;
+  /** Skip the centered content column — for tools that manage their own full-height layout. */
+  fullBleed?: boolean;
   children: React.ReactNode;
 };
 
-export default function AppShell({ org, userEmail, active, children }: AppShellProps) {
+export default function AppShell({ org, userEmail, active, fullBleed, children }: AppShellProps) {
   const initials = (org.name.replace(/[^A-Za-z ]/g, "").split(" ").map((w) => w[0]).join("") || "OS")
     .slice(0, 2)
     .toUpperCase();
@@ -82,8 +85,10 @@ export default function AppShell({ org, userEmail, active, children }: AppShellP
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0 overflow-y-auto">
-        <div className="max-w-[1080px] mx-auto px-6 py-6">{children}</div>
+      <main className={`flex-1 min-w-0 ${fullBleed ? "overflow-hidden" : "overflow-y-auto"}`}>
+        {fullBleed ? children : (
+          <div className="max-w-[1080px] mx-auto px-6 py-6">{children}</div>
+        )}
       </main>
       </div>
 
